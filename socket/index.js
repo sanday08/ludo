@@ -12,7 +12,7 @@ let usersToRoom={};
 
 io.on("connection", (socket) => {
 	console.log("Socketconnected");
-	socket.on("join", async(token, roomPrice) => {
+	socket.on("join", async({token, roomPrice}) => {
 	
 		const user = await getUserInfo(token);
 		if (!pendingRooms[roomPrice]) {
@@ -56,7 +56,7 @@ io.on("connection", (socket) => {
 
 	});
 
-	socket.on('leaveRoom',(roomId,userId,roomPrice) => {
+	socket.on('leaveRoom',({roomId,userId,roomPrice}) => {
 		//if user is available in pending room than delete otherwise its stay on live room
 		if(userId!=undefined && roomPrice!=undefined && roomId!=undefined){
 			if(pendingRooms[roomPrice]){
