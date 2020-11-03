@@ -30,8 +30,8 @@ io.on("connection", (socket) => {
 					[user._id]: addPendingUsers(user)
 				}
 	  }
-	  console.log("sandip Shiroya");
-      sendPendingRoomData(roomPrice);
+	  sendPendingRoomData(roomPrice);
+	  console.log("sandip")
 		} else {
 			let roomId = pendingRooms[roomPrice].roomId
 			usersToRoom[user._id] = {
@@ -127,5 +127,6 @@ const sendDesconnectUser=(roomId, userId)=>{
 	return io.in(roomId).emit("res",{data:userId,en:"disconnect",status:1})
 }
 const sendPendingRoomData=(roomPrice)=>{
+	console.log("jaimin")
   return io.in(roomPrice).emit("res",{data:pendingRooms[roomPrice],en:"join",status:1});
 }
