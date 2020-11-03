@@ -30,7 +30,7 @@ io.on("connection", (socket) => {
 					[user._id]: addPendingUsers(user)
 				}
 	  }
-	  sendPendingRoomData(roomId);
+	  sendPendingRoomData(roomId,roomPrice);
 	
 		} else {
 			let roomId = pendingRooms[roomPrice].roomId
@@ -41,7 +41,7 @@ io.on("connection", (socket) => {
 			};
       socket.join(pendingRooms[roomPrice].roomId);      
       pendingRooms[roomPrice].users[user._id] = addPendingUsers(user);
-      sendPendingRoomData(roomId);
+      sendPendingRoomData(roomId,roomPrice);
 			if (Object.keys(pendingRooms[roomPrice].users).length === 4) {
 				liveRooms[roomId] = {
 					users: _.cloneDeep(pendingRooms[roomPrice].users),
@@ -126,7 +126,7 @@ const addPendingUsers = (user) => {
 const sendDesconnectUser=(roomId, userId)=>{
 	return io.in(roomId).emit("res",{data:userId,en:"disconnect",status:1})
 }
-const sendPendingRoomData=(roomId)=>{
+const sendPendingRoomData=(roomId,roomPrice)=>{
 	
   return io.in(roomId).emit("res",{data:pendingRooms[roomPrice],en:"join",status:1});
 }
