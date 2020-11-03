@@ -30,6 +30,7 @@ io.on("connection", (socket) => {
 					[user._id]: addPendingUsers(user)
 				}
 	  }
+	  console.log("Pending",roomPrice,pendingRooms[roomPrice]);
 	  sendPendingRoomData(roomId,roomPrice);
 	
 		} else {
