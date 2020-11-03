@@ -13,7 +13,7 @@ let usersToRoom={};
 io.on("connection", (socket) => {
 	console.log("Socketconnected");
 	socket.on("join", async(token, roomPrice) => {
-		console.log("token is",token);
+	
 		const user = await getUserInfo(token);
 		if (!pendingRooms[roomPrice]) {
 			let roomId = uniqid();
@@ -29,7 +29,8 @@ io.on("connection", (socket) => {
 				users: {
 					[user._id]: addPendingUsers(user)
 				}
-      }
+	  }
+	  console.log("sandip Shiroya");
       sendPendingRoomData(roomPrice);
 		} else {
 			let roomId = pendingRooms[roomPrice].roomId
