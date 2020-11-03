@@ -1,11 +1,10 @@
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
 
-async function getUserInfo(tokenId) {
-  let token;
+async function getUserInfo(token) {
 
   //Set token from Bearer token in header
-  token = tokenId.split(" ")[1];
+
 
   //Verify Token
   try {
