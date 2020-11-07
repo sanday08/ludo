@@ -29,7 +29,7 @@ io.on("connection", (socket) => {
 				roomId,
 				price: roomPrice,
 				users: {
-					[user._id]: addPendingUsers(user)
+					[user._id]: addPendingUsers(user,roomPrice)
 				}
 	  }
 	  console.log("Pending",roomPrice,pendingRooms[roomPrice]);
@@ -43,14 +43,9 @@ io.on("connection", (socket) => {
 				roomPrice
 			};
       socket.join(pendingRooms[roomPrice].roomId);      
-      pendingRooms[roomPrice].users[user._id] = addPendingUsers(user);
+      pendingRooms[roomPrice].users[user._id] = addPendingUsers(user,roomPrice);
       sendPendingRoomData(roomId,roomPrice);
 			if (Object.keys(pendingRooms[roomPrice].users).length === 4) {
-				let i=0;
-				for (user of Object.keys(pendingRooms[roomPrice].users)){
-					pendingRooms[roomPrice].users[user].seatNo=i;
-					i++;
-				}
 				liveRooms[roomId] = {
 					users: _.cloneDeep(pendingRooms[roomPrice].users),
 					roomPrice: roomPrice,
@@ -130,16 +125,47 @@ const findRandom=()=>{
 }
 
 const startGame = (roomId) => {
-	
+	let seatNo=0;
+	for (let userId of Object.keys(liveRooms[roomId].users)){
+		liveRooms[roomId].users[userId].seatNo=seatNo;
+		seatNo++;
+	}
 	io.in(roomId).emit("res",{data:liveRooms[roomId],en:"startGame",status:1})
 
 }
 
-const addPendingUsers = (user) => {
+const addPendingUsers = (user,roomPrice) => {
+	let seatNo=-1;
+
+	
+		for (var i = 0; i < 5; i++) {
+		  //is Seated check user available on this cheat or not
+		  let isSeated = false;
+
+		  for (const userId of Object.keys(pendingRooms[roomPrice].users)) {
+			if (pendingRooms[roomPrice].users[userId].seatNo == i) {
+			  console.log("is true ==", i);
+			  isSeated = true;
+			  break;
+			}
+		  }
+		  console.log("is true outer for ==", i);
+		  if (!isSeated) {
+			seatNo = i;
+			console.log("Assign user Seat Number =", seatNo, " === ", i);
+			break;
+		  }
+		}
+		console.log("New user Seat Number =", seatNo);
+		if (seatNo === -1) {
+		  seatNo = Object.keys(pendingRooms[roomPrice].users).length;
+		}
 	return {
 		name: user.name,
 		profilePic: user.profilePic,
 		avtarId: user.avtarId,
+		seatNo,
+
 	}
 }
 
