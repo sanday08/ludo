@@ -162,6 +162,8 @@ const addPendingUsers = (user,roomPrice) => {
 		  seatNo = Object.keys(pendingRooms[roomPrice].users).length;
 		}
 	}
+	if(seatNo===-1)
+		seatNo =0
 	return {
 		name: user.name,
 		profilePic: user.profilePic,
