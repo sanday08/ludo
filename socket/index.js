@@ -135,6 +135,7 @@ const startGame = (roomId) => {
 }
 
 const addPendingUsers = (user,roomPrice) => {
+	console.log("addPendingRooms Call");
 	let seatNo=-1;
 
 	
