@@ -138,7 +138,7 @@ const addPendingUsers = (user,roomPrice) => {
 	console.log("addPendingRooms Call");
 	let seatNo=-1;
 
-	
+	if(pendingRooms[roomPrice]){
 		for (var i = 0; i < 5; i++) {
 		  //is Seated check user available on this cheat or not
 		  let isSeated = false;
@@ -161,6 +161,7 @@ const addPendingUsers = (user,roomPrice) => {
 		if (seatNo === -1) {
 		  seatNo = Object.keys(pendingRooms[roomPrice].users).length;
 		}
+	}
 	return {
 		name: user.name,
 		profilePic: user.profilePic,
