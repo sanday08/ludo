@@ -46,6 +46,11 @@ io.on("connection", (socket) => {
       pendingRooms[roomPrice].users[user._id] = addPendingUsers(user);
       sendPendingRoomData(roomId,roomPrice);
 			if (Object.keys(pendingRooms[roomPrice].users).length === 4) {
+				let i=0;
+				for (user of Object.keys(pendingRooms[roomPrice].users)){
+					pendingRooms[roomPrice].users[user].seatNo=i;
+					i++;
+				}
 				liveRooms[roomId] = {
 					users: _.cloneDeep(pendingRooms[roomPrice].users),
 					roomPrice: roomPrice,
@@ -125,11 +130,7 @@ const findRandom=()=>{
 }
 
 const startGame = (roomId) => {
-	let seatNo=0;
-	for (let userId of Object.keys(liveRooms[roomId].users)){
-		liveRooms[roomId].users[userId].seatNo=seatNo;
-		seatNo++;
-	}
+	
 	io.in(roomId).emit("res",{data:liveRooms[roomId],en:"startGame",status:1})
 
 }
