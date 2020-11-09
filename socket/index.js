@@ -125,12 +125,8 @@ const findRandom=()=>{
 }
 
 const startGame = (roomId) => {
-	let seatNo=0;
-	for (let userId of Object.keys(liveRooms[roomId].users)){
-		liveRooms[roomId].users[userId].seatNo=seatNo;
-		seatNo++;
-	}
-	io.in(roomId).emit("res",{data:liveRooms[roomId],en:"startGame",status:1})
+	let seatNo=0;	
+	io.in(roomId).emit("res",{data:{seatNo:0,diceNo:findRandom()},en:"turn",status:1})
 
 }
 
@@ -169,6 +165,7 @@ const addPendingUsers = (user,roomPrice) => {
 		profilePic: user.profilePic,
 		avtarId: user.avtarId,
 		seatNo,
+		pawns:[0,0,0,0]
 
 	}
 }
