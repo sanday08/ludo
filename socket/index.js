@@ -127,7 +127,7 @@ io.on("connection", (socket) => {
 	})
 });
 const findRandom=()=>{
- let random = Math.floor(Math.random() * 5)+1;
+ let random = Math.floor(Math.random() * 7)+1;
 		random=random===7?6:random;
 		repeat=random===6?repeat+=1:0;
 		if(repeat===3){
