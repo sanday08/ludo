@@ -64,7 +64,9 @@ io.on("connection", (socket) => {
 		currentSeatNo=currentSeatNo===4?0:currentSeatNo+=1;
 		io.in(roomId).emit("res",{data:{seatNo:currentSeatNo,diceNo:findRandom()},en:"turn",status:1})
 	})
-
+	socket.on("rotateDice",()=>{
+		io.in(roomId).emit("res",{data:"rotateDice",en:"rotateDice",status:1})
+	})
 
 	socket.on("move",({userId,roomId,pownNo,pownStep,isKill}) => {
 		let random=findRandom()
