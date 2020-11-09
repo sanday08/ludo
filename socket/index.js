@@ -62,7 +62,7 @@ io.on("connection", (socket) => {
 	socket.on("changeTurn",({currentSeatNo,roomId})=>{
 		console.log("dum dum");
 		let random=findRandom();
-		currentSeatNo=currentSeatNo===4?0:currentSeatNo+=1;
+		currentSeatNo=currentSeatNo===3?0:currentSeatNo+=1;
 		console.log("Current Cheat NO is:",currentSeatNo)
 		io.in(roomId).emit("res",{data:{seatNo:currentSeatNo,diceNo:findRandom()},en:"turn",status:1})
 		console.log("jaimin suthiyo....")
